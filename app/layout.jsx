@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 
 // const dancing_Script = Dancing_Script({
 //   subsets: ["latin"],
-//   weight: ["500", "700"],
+//   weight: ["500", "700"],s
 // });
 
 export const metadata = {
