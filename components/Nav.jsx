@@ -2,21 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Dancing_Script } from "next/font/google";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { FaTimes } from "react-icons/fa";
 import { signIn, useSession, getProviders, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
-// const dancing_Script = Dancing_Script({
-//   subsets: ["latin"],
-//   weight: ["500", "700"],
-// });
-
 const Nav = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState();
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  const handleClick = (anchor) => {
+    const id = `${anchor}-section`;
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      ``;
+    }
+  };
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -42,21 +48,38 @@ const Nav = () => {
         )}
         <Link href="/" className="flex gap-2 flex-center">
           <p>
-            <span className="text-lipstick text-xl font-bold">
-              {" "}
+            <span className="text-lipstick text-3xl font-dancing">
               Sexual Purity
             </span>
           </p>
         </Link>
       </div>
-      <div className="sm:flex hidden">
+      <div className="sm:flex hidden font-kalam">
         <div className="flex items-center gap-5 md:gap-12 mr-28 text-lg">
-          <Link href="/" className="hover:border-b-4 border-lipstick">
+          <Link href="/" className="hover:border-b-[2.5px] border-lipstick">
             Home
           </Link>
-          <Link href="/">Blog</Link>
-          <Link href="/about">Who are we</Link>
-          <Link href="/">FAQ</Link>
+          <Link
+            href="/#blog-section"
+            onClick={() => handleClick("blog")}
+            className="hover:border-b-[2.5px] border-lipstick"
+          >
+            Blog
+          </Link>
+          <Link
+            href="/#about"
+            onClick={() => handleClick("about")}
+            className="hover:border-b-[2.5px] border-lipstick"
+          >
+            Who are we
+          </Link>
+          <Link
+            href="/#faq-section"
+            onClick={() => handleClick("faq")}
+            className="hover:border-b-[2.5px] border-lipstick"
+          >
+            FAQ
+          </Link>
         </div>
 
         {session?.user ? (
@@ -95,7 +118,7 @@ const Nav = () => {
           </>
         )}
       </div>
-      <div className="sm:hidden">
+      <div className="sm:hidden font-kalam">
         {session?.user ? (
           <Image
             src={session?.user.image}
@@ -125,35 +148,50 @@ const Nav = () => {
               <Link
                 href="/"
                 className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
+                onClick={() => {
+                  handleClick("projects");
+                  setToggleDropdown(false);
+                }}
               >
                 Home
               </Link>
               <Link
-                href="/blog"
+                href="/#blog-section"
                 className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
+                onClick={() => {
+                  handleClick("blog");
+                  setToggleDropdown(false);
+                }}
               >
                 Blog
               </Link>
               <Link
                 href="/about"
                 className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
+                onClick={() => {
+                  handleClick("about");
+                  setToggleDropdown(false);
+                }}
               >
                 Who we are
               </Link>
               <Link
-                href="/faq"
+                href="/#faq-section"
                 className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
+                onClick={() => {
+                  handleClick("faq");
+                  setToggleDropdown(false);
+                }}
               >
                 FAQ
               </Link>
               <Link
-                href="/profile"
+                href="/#profile"
                 className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
+                onClick={() => {
+                  handleClick("profile");
+                  setToggleDropdown(false);
+                }}
               >
                 My Profile
               </Link>

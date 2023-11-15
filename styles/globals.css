@@ -157,10 +157,10 @@ body {
 
 .gallery_card {
   color: #fff;
-  max-width: 30ch;
+  max-width: 25ch;
   text-align: center;
-  padding: 1.5rem 2.5rem;
-  background-image: url("../public/ben-moreland-GkWP64truqg-unsplash.jpg");
+  padding: 2rem 2.5rem;
+  background-image: url("../public/Let'sTalkSP\ StreamDisplay\ 2.png");
   background-size: 105% 105%;
   background-position: center top;
   transition: background-position 350ms;
@@ -168,6 +168,14 @@ body {
   position: relative;
   cursor: pointer;
   /* transition: background-size 350ms; */
+}
+
+.gallery_card:nth-child(2) {
+  background-image: url("../public/jake-blucker-tMzCrBkM99Y-unsplash.jpg");
+}
+
+.gallery_card:nth-child(3) {
+  background-image: url("../public/gary-ellis-UnP0-OSKGck-unsplash.jpg");
 }
 
 .gallery_card::before {

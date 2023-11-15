@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import { models, Schema, model } from "mongoose";
 
 const UserSchema = new Schema(

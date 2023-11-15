@@ -1,87 +1,74 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, TregisterForm } from "@/utils/types";
+import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 
-const Form = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    gender: "",
-    age: "",
-    info: "",
-    moreInfo: "",
-    isWatchman: "",
-    isAgreement: true,
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+const RegistrationForm = () => {
+  const router = useRouter();
+  const [showOther, setShowOther] = useState(false);
   const {
-    name,
-    email,
-    phone,
-    gender,
-    age,
-    info,
-    moreInfo,
-    isWatchman,
-    isAgreement,
-  } = formData;
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch,
+    setError,
+  } = useForm<TregisterForm>({ resolver: zodResolver(registerSchema) });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setIsSubmitting(true);
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      gender: "",
-      age: "",
-      info: "",
-      moreInfo: "",
-      isWatchman: "",
-      isAgreement: true,
+  const onSubmit = async (data: TregisterForm) => {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        body: JSON.stringify({
-          ...formData,
-        }),
-      });
+    const responseData = await response.json();
 
-      if (response.ok) {
-        toast.success("Registration Successful!", {
-          position: "top-right",
-          autoClose: 6000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        router.push("/");
-      }
-    } catch (error) {
-      toast.error(error, {
+    // if (!response.ok) {
+    //   toast.error("Submission Failed, Try Again!", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+
+    //   return;
+    // }
+
+    // if (responseData.errors) {
+    //   const errors = responseData.errors;
+    //   if (errors.fullname) {
+    //     setError("fullname", {
+    //       type: "server",
+    //       message: errors.fullname,
+    //     });
+    //   } else if (errors.email) {
+    //     setError("email", {
+    //       type: "server",
+    //       message: errors.email,
+    //     });
+    //   } else if (errors.phone) {
+    //     setError("phone", {
+    //       type: "server",
+    //       message: errors.phone,
+    //     });
+    //   } else {
+
+    if (responseData.errors) {
+      toast.error("Something went Wrong!", {
         position: "top-right",
-        autoClose: 6000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -89,15 +76,37 @@ const Form = () => {
         progress: undefined,
         theme: "light",
       });
-    } finally {
-      setIsSubmitting(false);
+    }
+
+    if (responseData.success) {
+      toast.success("Registration Successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      reset();
+
+      await fetch("/api/send", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      router.push("/");
     }
   };
 
   return (
     <>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mt-10 w-full max-w-sm flex flex-col gap-7 mx-auto"
       >
         <ToastContainer />
@@ -109,14 +118,15 @@ const Form = () => {
             Name
           </label>
           <input
+            {...register("fullname")}
             type="text"
             placeholder="full name"
             id="name"
-            name="name"
             className="form_input"
-            onChange={handleChange}
-            value={formData.name}
           />
+          {errors.fullname && (
+            <p className="text-red-500">{`${errors.fullname.message}`}</p>
+          )}
         </div>
 
         <div className="form-data">
@@ -127,14 +137,15 @@ const Form = () => {
             Email
           </label>
           <input
+            {...register("email")}
             type="email"
             placeholder="email"
             id="email"
-            name="email"
             className="form_input"
-            onChange={handleChange}
-            value={formData.email}
           />
+          {errors.email && (
+            <p className="text-red-500">{`${errors.email.message}`}</p>
+          )}
         </div>
 
         <div className="form-data">
@@ -142,34 +153,40 @@ const Form = () => {
             className="font-semibold text-base text-gray-700"
             htmlFor="phone"
           >
-            Phone{" "}
+            Phone
           </label>
           <input
+            {...register("phone")}
             type="tel"
             placeholder="Phone"
             id="phone"
-            name="phone"
             className="form_input"
-            onChange={handleChange}
-            value={formData.phone}
           />
+          {errors.phone && (
+            <p className="text-red-500">{`${errors.phone.message}`}</p>
+          )}
         </div>
 
         <div className="form-data">
-          <label className="font-semibold text-base text-gray-700" htmlFor="">
+          <label
+            className="font-semibold text-base text-gray-700"
+            htmlFor="gender"
+          >
             Gender
           </label>
           <select
-            onChange={handleChange}
+            {...register("gender")}
             name="gender"
             id="gender"
             className="block w-full border border-black rounded-md mt-2 py-2 px-4"
-            value={formData.gender}
           >
             <option>-- select --</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
+          {errors.gender && (
+            <p className="text-red-500">{`${errors.gender.message}`}</p>
+          )}
         </div>
 
         <div className="form-data">
@@ -180,16 +197,18 @@ const Form = () => {
             Age Range
           </label>
           <select
-            onChange={handleChange}
+            {...register("age")}
             name="age"
             id="age"
             className="block w-full border border-black rounded-md mt-2 py-2 px-4"
-            value={formData.age}
           >
             <option>-- select --</option>
             <option value="teenager"> 14 - 17 </option>
             <option value="adult">18 & above</option>
           </select>
+          {errors.age && (
+            <p className="text-red-500">{`${errors.age.message}`}</p>
+          )}
         </div>
 
         <div className="form-data">
@@ -200,19 +219,13 @@ const Form = () => {
             Are you a Watchman
           </label>
           <div id="isWatchman">
-            <input
-              type="radio"
-              value="yes"
-              name="isWatchman"
-              onChange={handleChange}
-            />
+            <input {...register("isWatchman")} type="radio" value="yes" />
             <span className="mx-2">Yes</span>
             <input
+              {...register("isWatchman")}
               type="radio"
               value="no"
-              name="isWatchman"
               className="ml-2"
-              onChange={handleChange}
             />
             <span className="mx-2">No</span>
           </div>
@@ -225,50 +238,39 @@ const Form = () => {
             How did you get to know about sexual purtiy 4.0
           </label>
           <select
-            name="info"
             id="info"
-            onChange={handleChange}
-            value={formData.info}
+            {...register("info")}
             className="block w-full border border-black rounded-md mt-2 py-2 px-4"
           >
             <option>-- select -- </option>
             <option value="facebook">Facebook</option>
             <option value="whatsapp">WhatsApp</option>
             <option value="friends">Friends</option>
-            <option value="other">Other</option>
+            <option value="other">Email</option>
           </select>
-          {formData.info == "other" && (
-            <input
-              type="text"
-              name="moreInfo"
-              onChange={handleChange}
-              value={formData.moreInfo}
-              placeholder="please do tell"
-              className="block w-full border border-black rounded-md mt-2 py-2 px-4"
-            />
-          )}
+          {/* <input
+            type="text"
+            {...register("moreInfo")}
+            placeholder="please do tell"
+            className="block w-full border border-black rounded-md mt-2 py-2 px-4"
+          />*/}
         </div>
 
         <div className="form-data">
           <input
             type="checkbox"
-            name="isAgreement"
             id="isAgreement"
             className="accent-lipstick mr-2"
-            onChange={handleChange}
-            checked={formData.isAgreement}
+            {...register("isAgreement")}
           />
+
           <span>checking means you'd love to recieve newsletters from us</span>
         </div>
-
+        {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
         <button
           disabled={isSubmitting}
           type="submit"
-          className={
-            isSubmitting
-              ? "bg-lipstick text-white py-2 px-auto font-bold rounded-xl hover:cursor-wait"
-              : "bg-gray-400 text-white py-2 px-auto font-bold rounded-xl hover:cursor-not-allowed"
-          }
+          className="bg-lipstick text-white py-2 px-auto font-bold rounded-xl disabled:bg-gray-400"
         >
           {isSubmitting ? "Submitting ..." : "Register"}
         </button>
@@ -277,4 +279,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default RegistrationForm;

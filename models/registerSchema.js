@@ -2,7 +2,7 @@ import { Schema, models, model } from "mongoose";
 
 const RegistrationSchema = new Schema(
   {
-    name: {
+    fullname: {
       type: String,
       required: [true, "Name is required"],
     },
@@ -27,10 +27,7 @@ const RegistrationSchema = new Schema(
     },
     info: {
       type: String,
-      required: [true, "phone is required"],
-    },
-    moreInfo: {
-      type: String,
+      required: [true, "This is required"],
     },
     isAgreement: {
       type: Boolean,

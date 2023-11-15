@@ -30,10 +30,11 @@
     "app/api/auth/[...nextauth]/route.js",
     "components/Nav.tsx",
     "components/Provider.jsx",
-    "app/layout.jsx",
+    "app/layout.tsx",
     "components/Quotes.tsx",
     "components/Testimonies.jsx",
-    "components/Form.jsx"
+    "components/RegistrationForm.jsx",
+    "app/api/send/route.ts"
   ],
   "exclude": ["node_modules"]
 }

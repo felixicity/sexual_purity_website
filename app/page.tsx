@@ -6,22 +6,24 @@ import Blog from "@/components/Blog";
 import ContactForm from "@/components/ContactForm";
 import { quotes, testimonies } from "@/quotes.js";
 import FAQ from "@/components/FAQ";
+import { EmailTemplate } from "@/email/EmailTemplate";
+import { EmailSentConfirmation } from "@/email/EmailSentConfirmation";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <section className="my-16">
-        <p className=" container max-w-[700px] text-lg text-grey mx-auto">
+      <section className="mt-16  lg:my-16">
+        <p className=" container max-w-[700px] text-xl text-grey mx-auto">
           Purity is so important that God takes it as a priority to help young
           adults aspire and live their lives for the purpose for which they're
           called.
         </p>
-        <div className="my-32">
+        <div className="my-16 font-lato">
           <Quotes quotes={quotes} />
         </div>
       </section>
-      <section className="my-32">
+      <section className="mt-8 mb-32">
         <Gallery />
       </section>
       <section className="my-32 ml-8">
@@ -30,10 +32,10 @@ export default function Home() {
       <section className="my-32">
         <Blog />
       </section>
-      <section className="my-32">
+      <section className="my-32 font-kalam">
         <ContactForm />
       </section>
-      <section className="my-32">
+      <section className="my-32 font-kalam">
         <FAQ />
       </section>
     </>

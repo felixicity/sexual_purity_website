@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="">
+    <div className="font-lato">
       <div className="container mt-32 mb-2">
         <div className="flex justify-between gap-x-2 gap-y-16 flex-wrap">
           <div className="socials">

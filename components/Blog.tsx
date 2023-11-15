@@ -4,8 +4,10 @@ import Image from "next/image";
 
 const Blog = () => {
   return (
-    <div className="container">
-      <h2 className="text-center font-bold text-2xl mt-32 mb-12">Blog</h2>
+    <div className="container font-kalam" id="blog-section">
+      <h2 className="text-center font-bold text-2xl mt-32 mb-12 font-dancing">
+        Blog
+      </h2>
       <div className="blog-container">
         <Image
           src="/20230913_183236-01.jpeg"

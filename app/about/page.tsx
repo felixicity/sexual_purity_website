@@ -1,8 +1,21 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import AboutUs from "../../public/gary-ellis-UnP0-OSKGck-unsplash.jpg";
 
 const About = () => {
+  const sendEmail = async () => {
+    const formData = { name: "chukwu" };
+    // send new user an email
+    await fetch("/api/sendemail", {
+      method: "POST",
+      body: JSON.stringify({
+        ...formData,
+      }),
+    });
+  };
+
   return (
     <>
       {/* <div className="w-full h-[200px]">
@@ -36,6 +49,8 @@ const About = () => {
           officiis neque atque odio sit. At tenetur tempora placeat voluptatem
           ratione maiores consequuntur.
         </p>
+
+        <button className="py-1 px-2 bg-black text-white"> Send email</button>
       </div>
     </>
   );

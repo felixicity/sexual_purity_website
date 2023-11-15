@@ -9,8 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
-        dancing_script: ["Dancing_Script", "serif"],
+        lato: ["var(--font-lato)"],
+        dancing: ["var(--font-dancing-script)"],
+        aurore: ["var(--font-la-belle-aurore)"],
+        kalam: ["var(--font-kalam)"],
       },
       colors: {
         lipstick: "#CD2527",

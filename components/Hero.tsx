@@ -5,7 +5,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <>
-      <main className="container mt-16">
+      <main className="container mt-16 font-kalam">
         <Link
           href="/"
           className="flex items-center border-gray-600 text-gray-800 active:bg-gray-100 hover:bg-gray-100 lg:text-lg border-2 px-2 py-1 w-3/4 md:w-1/3 lg:w-1/3 rounded-lg transition"

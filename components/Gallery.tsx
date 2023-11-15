@@ -3,7 +3,9 @@ import React from "react";
 const Gallery = () => {
   return (
     <div className="container">
-      <h2 className="text-2xl font-bold text-center mb-16">Gallery</h2>
+      <h2 className="text-2xl font-bold text-center mb-16 font-dancing">
+        Gallery
+      </h2>
       <div className="grid grid-flow-row gap-y-6 justify-center  md:grid-flow-col md:gap-x-6">
         <div className="gallery_card">
           <div className="gallery_card-content">

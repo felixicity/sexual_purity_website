@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { BiSolidQuoteRight, BiSolidQuoteLeft } from "react-icons/bi";
-// import { setTimeout } from "timers/promises"
 
 const Quotes = ({ quotes }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,17 +18,19 @@ const Quotes = ({ quotes }) => {
     );
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setCurrentIndex((prevIndex) =>
-  //       prevIndex === quotes.length - 1 ? 0 : prevIndex + 1
-  //     );
-  //   }, 8000);
-  // }, [currentIndex]);
+  useEffect(() => {
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === quotes.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 8000);
+  }, [currentIndex]);
 
   return (
     <div className="app">
-      <h2 className="text-center font-bold text-2xl mb-8">Quotes</h2>
+      <h2 className="text-center font-bold text-2xl mb-8 font-dancing">
+        Quotes
+      </h2>
       <div className="card-list lg:gap-5">
         <button onClick={handlePrev} className="prev-button">
           <span className="transition hover:text-2xl hover:font-bold">
