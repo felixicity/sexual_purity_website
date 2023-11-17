@@ -33,7 +33,7 @@ const kalam = Kalam({
   weight: "400",
 });
 
-export const metadata = {
+const metadata = {
   title: "Sexual Purity",
   description: "Sexual Purity",
 };
