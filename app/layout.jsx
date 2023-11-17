@@ -1,5 +1,3 @@
-"use client";
-
 import "../styles/globals.css";
 import { Lato, Dancing_Script, La_Belle_Aurore, Kalam } from "next/font/google";
 import Provider from "@/components/Provider";
@@ -33,10 +31,10 @@ const kalam = Kalam({
   weight: "400",
 });
 
-const metadata = {
-  title: "Sexual Purity",
-  description: "Sexual Purity",
-};
+// const metadata = {
+//   title: "Sexual Purity",
+//   description: "Sexual Purity",
+// };
 
 export default function RootLayout({ children }) {
   return (
