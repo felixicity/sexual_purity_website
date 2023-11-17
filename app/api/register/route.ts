@@ -4,9 +4,9 @@ import { registerSchema } from "@/utils/types";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
-  const body: unknown = await req.json();
+  const body = await req.json();
 
-  // await connectDB();
+  await connectDB();
 
   const result = registerSchema.safeParse(body);
   let zodErrors = {};
@@ -17,8 +17,12 @@ export const POST = async (req: Request) => {
     });
   }
 
-  // const newUser = new RegiseredUser(body);
-  // await newUser.save();
+  const newUser = new RegiseredUser(body);
+  await newUser.save();
+
+  if (!newUser) {
+    return NextResponse.json({ errors: "Registration Failed" });
+  }
 
   return NextResponse.json(
     Object.keys(zodErrors).length > 0

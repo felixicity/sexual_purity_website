@@ -66,7 +66,7 @@ const RegistrationForm = () => {
     //   } else {
 
     if (responseData.errors) {
-      toast.error("Something went Wrong!", {
+      toast.error(responseData.errors.message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -76,6 +76,10 @@ const RegistrationForm = () => {
         progress: undefined,
         theme: "light",
       });
+
+      setTimeout(() => {
+        reset();
+      }, 2000);
     }
 
     if (responseData.success) {
@@ -90,8 +94,6 @@ const RegistrationForm = () => {
         theme: "light",
       });
 
-      reset();
-
       await fetch("/api/send", {
         method: "POST",
         body: JSON.stringify(data),
@@ -99,6 +101,11 @@ const RegistrationForm = () => {
           "Content-Type": "application/json",
         },
       });
+
+      setTimeout(() => {
+        reset();
+      }, 2000);
+
       router.push("/");
     }
   };

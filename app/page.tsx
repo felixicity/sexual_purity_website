@@ -6,8 +6,6 @@ import Blog from "@/components/Blog";
 import ContactForm from "@/components/ContactForm";
 import { quotes, testimonies } from "@/quotes.js";
 import FAQ from "@/components/FAQ";
-import { EmailTemplate } from "@/email/EmailTemplate";
-import { EmailSentConfirmation } from "@/email/EmailSentConfirmation";
 
 export default function Home() {
   return (
