@@ -31,11 +31,6 @@ const kalam = Kalam({
   weight: "400",
 });
 
-// const metadata = {
-//   title: "Sexual Purity",
-//   description: "Sexual Purity",
-// };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
